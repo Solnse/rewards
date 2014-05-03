@@ -13,14 +13,36 @@ class Starbucks < Reward
       form = page.form_with(id: "accountForm")
       form.field_with(id: "Account_UserName").value = @username
       form.field_with(id: "Account_PassWord").value = @password
-      result = agent.submit form
-      #File.open("starbucks_result.html", "w") { |f| f.write(result.body) }
-    rescue => e 
+      result = agent.submit form      
+    rescue => e
       puts e.message
-      puts "ERROR"
+      return {error: "RESOURCE_CHANGED"}
+    end
+    
+    document = Nokogiri::HTML(result.body)
+
+    begin
+      balance = document.css('.balance-amount')[0].text[/\$[0-9\.]+/]
+    rescue => e
+      puts e.message
+      return {error: "UNAUTHORIZED"}
     end
 
-    document = Nokogiri::html(result.body)
+    begin
+      stars_to_go = document.css('.stars-until').text[/[0-9\.]+/]
+      earned_available = document.css('.rewards_cup_gold').text
+    rescue => e
+      puts e.message
+      return {error: "ATTRIBUTES_CHANGED"}
+    end
+
+    result = { type:             "starbucks",
+               balance:          balance,
+               stars_to_go:      stars_to_go,
+               earned_available: earned_available
+             }
+
+    return result
 
   end
 end
