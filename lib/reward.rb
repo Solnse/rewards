@@ -1,8 +1,15 @@
+require 'reward/starbucks'
+require 'reward/united'
+
 class Reward
-  def self.reward_balance(params = {})
-    card = Card.new(params)
-    card.reward_balance
+  def initialize params
+    @type     = params[:type]
+    @username = params[:username]
+    @password = params[:password]
+    @klass    = Object.const_get(@type.capitalize) if Object.const_defined?(@type.capitalize)
+  end
+
+  def self.card_balance
+    @klass.balance(@username, @password) unless @klass.nil?
   end
 end
-
-require 'card'

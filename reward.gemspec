@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.summary     = "Rewards!"
   s.description = "A simple interface to popular rewards program balances."
   s.authors     = ["Chad Edie"]
-  s.email       = 'chad@cookflavor.com'
+  s.email       = 'chad@therailsroad.com'
   s.files       = ["lib/reward.rb", "lib/reward/*.rb"]
   s.homepage    = 'http://rubygems.org/gems/reward'
   s.license     = 'MIT'

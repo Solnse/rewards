@@ -1,7 +1,7 @@
 require 'mechanize'
 
 class Starbucks < Reward
-  def self.card_balance(username, password)
+  def self.balance(username, password)
     @username = username
     @password = password
 
@@ -19,6 +19,8 @@ class Starbucks < Reward
       puts e.message
       puts "ERROR"
     end
+
+    document = Nokogiri::html(result.body)
 
   end
 end
