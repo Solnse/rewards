@@ -7,6 +7,7 @@ class Reward
   end
 
   def card_balance
+    return {error: "UNKNOWN_CARD_TYPE"} if @klass.nil?
     @klass.balance(@username, @password) unless @klass.nil?
   end
 end
