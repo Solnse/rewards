@@ -4,12 +4,19 @@ class Starbucks < Reward
   def self.balance(username, password)
     @username = username
     @password = password
+    @signin_page = "https://www.starbucks.com/account/signin"
 
     agent = Mechanize.new
     agent.user_agent_alias = 'Mac Safari'
+    agent.read_timeout = 10
 
     begin
-      page = agent.get "https://www.starbucks.com/account/signin"
+      page = agent.get @signin_page
+    rescue Timeout::Error
+      return {error: "PAGE_UNAVAILABLE"}
+    end
+
+    begin
       form = page.form_with(id: "accountForm")
       form.field_with(id: "Account_UserName").value = @username
       form.field_with(id: "Account_PassWord").value = @password
