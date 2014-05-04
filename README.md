@@ -27,4 +27,8 @@ there are 5 possible errors that could be returned from a call.
                                 the fields we expect to find for account information 
                                 is not found.
 
+One of the main goals of this gem is to NOT use selenium-webdriver or other solutions
+that use a web browser object so this gem can be included on projects that choose
+not to allow browsers on their servers.
+
 if you have any questions or comments, feel free to contact me at chad@therailsroad.com
