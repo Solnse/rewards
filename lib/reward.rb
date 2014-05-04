@@ -12,5 +12,5 @@ class Reward
   end
 end
 
-require 'reward/starbucks'
-require 'reward/united'
+require_relative 'reward/starbucks'
+require_relative 'reward/united'
