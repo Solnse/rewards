@@ -1,5 +1,6 @@
 require 'mechanize'
 
+# United Mileage Plus rewards program.
 class United < Reward
 
   def self.balance(username, password)
@@ -13,23 +14,22 @@ class United < Reward
     agent.follow_meta_refresh = true
 
     begin
-      page = agent.get @signin_page
+      page     = agent.get @signin_page
+      document = Nokogiri::HTML(page.body)
     rescue Timeout::Error
       return {error: "PAGE_UNAVAILABLE"}
     end
 
-    document = Nokogiri::HTML(page.body)
-
-    params = document.css('input').map { |input| [input['name'], input['value']] }.to_h
-
-    params["ctl00$ContentInfo$SignIn$onepass$txtField"] = @username
-    params["ctl00$ContentInfo$SignIn$password$txtPassword"] = @password
-
-    params.delete("ctl00$CustomerHeader$ChangeBtn")
-
     begin
-      result = agent.post("https://www.united.com/web/en-US/apps/account/signin.aspx", params)
-      document = Nokogiri::HTML(result.body)
+      # iterate through all the hidden input fields to preserve for the post action.
+      params   = document.css('input').map { |input| [input['name'], input['value']] }.to_h
+      params["ctl00$ContentInfo$SignIn$onepass$txtField"]     = @username
+      params["ctl00$ContentInfo$SignIn$password$txtPassword"] = @password
+      # this hidden input field must be deleted or the post fails.
+      params.delete("ctl00$CustomerHeader$ChangeBtn")
+
+      page     = agent.post("https://www.united.com/web/en-US/apps/account/signin.aspx", params)
+      document = Nokogiri::HTML(page.body)
     rescue => e
       puts e.message
       return {error: "RESOURCE_CHANGED"}
@@ -65,6 +65,5 @@ class United < Reward
               travelbank_current_balance:   travelbank_current_balance,
               travelbank_available_balance: travelbank_available_balance
               }
-    return result
   end
 end
