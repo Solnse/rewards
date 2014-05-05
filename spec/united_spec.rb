@@ -11,6 +11,10 @@ describe "United MileagePlus balance" do
     @result.freeze
   end
 
+  it "returns 'united' type" do 
+    expect(@result[:type]).to eq('united')
+  end
+
   it "returns a balance" do 
     expect(@result[:balance]).not_to be_nil
   end

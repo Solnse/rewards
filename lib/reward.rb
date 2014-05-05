@@ -14,3 +14,4 @@ end
 
 require_relative 'reward/starbucks'
 require_relative 'reward/united'
+require_relative 'reward/amtrak'

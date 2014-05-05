@@ -11,6 +11,10 @@ describe "Starbucks stars balance" do
     @result.freeze
   end
 
+  it "returns 'starbucks' type" do 
+    expect(@result[:type]).to eq('starbucks')
+  end
+
   it "returns a balance" do 
     expect(@result[:balance]).not_to be_nil
   end

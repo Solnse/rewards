@@ -2,6 +2,7 @@ require 'mechanize'
 
 # My Starbucks Rewards program.
 class Starbucks < Reward
+  
   def self.balance(username, password)
     @username = username
     @password = password
