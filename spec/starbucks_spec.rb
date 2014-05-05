@@ -2,15 +2,15 @@ require 'yaml'
 require 'rspec'
 require_relative '../lib/reward'
 
-accounts = YAML.load_file('secrets.yml')
-
 describe "Starbucks stars balance" do  
   before(:all) do 
-    @username = accounts['starbucks']['username']
-    @password = accounts['starbucks']['password']
+    @accounts = YAML.load_file('./secrets.yml')
+    @username = @accounts['starbucks']['username']
+    @password = @accounts['starbucks']['password']
     @result = Reward.new(type: 'starbucks', username: @username, password: @password).card_balance
+    @result.freeze
   end
-  
+
   it "returns a balance" do 
     expect(@result[:balance]).not_to be_nil
   end

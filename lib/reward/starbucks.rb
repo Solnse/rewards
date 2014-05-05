@@ -48,8 +48,6 @@ class Starbucks < Reward
                stars_to_go:      stars_to_go,
                earned_available: earned_available
              }
-
     return result
-
   end
 end
