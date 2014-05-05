@@ -55,7 +55,8 @@ class United < Reward
       return {error: "ATTRIBUTES_CHANGED"}
     end
 
-    result = {balance:                      balance, 
+    result = {type:                         "united",
+              balance:                      balance, 
               account_number:               account_number,
               ytd_qualifying_miles:         ytd_qualifying_miles,
               ytd_qualifying_segments:      ytd_qualifying_segments,
